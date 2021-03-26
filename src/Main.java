@@ -63,6 +63,7 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
 
         // TextField Information
         textFieldUsername.setBounds(20,250,340,25);
+        textFieldUsername.requestFocusInWindow();
         textFieldPassword.setBounds(20,310,340,25);
 
         // Button Information
