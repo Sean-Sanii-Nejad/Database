@@ -35,12 +35,13 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setSize(400, 450);
         jframe.setResizable(false);
-        jframe.addKeyListener(this);
         jframe.add(panelLogin);
+        jframe.setFocusable(true);
         jframe.setVisible(true);
 
         // Panel Information
         panelLogin.setBounds(0,0, 400, 450);
+        panelLogin.setFocusable(true);
         panelLogin.setLayout(null);
         panelLogin.add(labelUsername);
         panelLogin.add(labelPassword);
@@ -67,10 +68,16 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
         // Button Information
         buttonLogin.setText("Login");
         buttonLogin.setBounds(20,350, 340, 30);
-        buttonLogin.addActionListener(this);
 
         // Image Information
         labelPicture.setBounds(110,25, 200, 200);
+
+        // Key Listeners
+        buttonLogin.addActionListener(this);
+        jframe.addKeyListener(this);
+        panelLogin.addKeyListener(this);
+        textFieldUsername.addKeyListener(this);
+        textFieldPassword.addKeyListener(this);
     }
 
     public static void main(String[] args) throws IOException {
@@ -80,23 +87,7 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonLogin){
-            try{
-                String sql = "SELECT * FROM users WHERE username=? and password=?";
-                PreparedStatement statement = getConnection().prepareStatement(sql);
-                statement.setString(1, textFieldUsername.getText());
-                statement.setString(2, textFieldPassword.getText());
-                ResultSet result = statement.executeQuery();
-                if(result.next()){
-                    MainInterface main = new MainInterface();
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Username or Password is incorrect");
-                    textFieldPassword.setText("");
-                }
-            }
-            catch(SQLException error){
-               error.printStackTrace();
-            }
+            login();
         }
     }
     @Override
@@ -133,7 +124,7 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
     @Override
     public void keyPressed(KeyEvent e) {
        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-           System.out.println("ENTER!!!");
+           login();
        }
     }
 
@@ -143,5 +134,26 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
 
     public Connection getConnection() throws SQLException{
             return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
+    }
+
+    public void login(){
+        try{
+            String sql = "SELECT * FROM users WHERE username=? and password=?";
+            PreparedStatement statement = getConnection().prepareStatement(sql);
+            statement.setString(1, textFieldUsername.getText());
+            statement.setString(2, textFieldPassword.getText());
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                MainInterface main = new MainInterface();
+                jframe.dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Username or Password is incorrect");
+                textFieldPassword.setText("");
+            }
+        }
+        catch(SQLException error){
+            error.printStackTrace();
+        }
     }
 }
