@@ -2,11 +2,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class MainInterface {
 
@@ -46,17 +45,33 @@ public class MainInterface {
         deleteButton.setBounds(130,15,100,25);
         deleteButton.setText("Delete");
 
+        // SQL Inforamtion
+        ArrayList<User> arrayList = new ArrayList();
+        String sql = "SELECT * FROM users";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        ResultSet result = statement.executeQuery();
+        User user;
+        while(result.next()){
+            user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
+            arrayList.add(user);
+        }
+
         // Table Information
         String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
-        String[][] data = {{"Sean", "Sanii Nejad", "username", "password"}};
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        DefaultTableModel model = new DefaultTableModel(null, columnNames);
+        Object[] row = new Object[4];
+        for(int i = 0; i < arrayList.size(); i++){
+            row[0] = arrayList.get(i).getFirstName();
+            row[1] = arrayList.get(i).getSecondName();
+            row[2] = arrayList.get(i).getUsername();
+            row[3] = arrayList.get(i).getPassword();
+            model.addRow(row);
+        }
 
         userTable.setBounds(25,100,250, 300);
         userTable.setModel(model);
 
-        String sql = "SELECT * FROM users";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
     }
 
     public static void main(String[] args) throws IOException, SQLException {
@@ -65,5 +80,32 @@ public class MainInterface {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
+    }
+}
+
+class User {
+    private String firstName;
+    private String secondName;
+    private String username;
+    private String password;
+
+    public User(String firstName, String secondName, String username, String password){
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getFirstName(){
+        return firstName;
+    }
+    public String getSecondName(){
+        return secondName;
+    }
+    public String getUsername(){
+        return username;
+    }
+    public String getPassword(){
+        return password;
     }
 }
