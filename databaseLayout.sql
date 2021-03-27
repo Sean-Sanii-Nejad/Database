@@ -3,7 +3,9 @@
 -- Host: localhost    Database: mydatabase
 -- ------------------------------------------------------
 -- Server version	8.0.23-0ubuntu0.20.04.1
-
+--
+-- Table structure for table `users`
+--
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
@@ -13,11 +15,12 @@ CREATE TABLE `users` (
   `password` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `users`
+--
+
 LOCK TABLES `users` WRITE;
-
-INSERT INTO `users` VALUES ('Sean','Sanii Nejad','username','password'),('Shiren','Sanii Nejad','username2','password2');
-
+INSERT INTO `users` VALUES ('Sean','Sanii Nejad','username','password'),('Shiren','Quinn','Ines','cereal'),('John','Wood','JohnStar','pancake'),('Alex','Sun','Hello','World'),('Sam','Tuck','SamuelPow','cheesecake');
 UNLOCK TABLES;
 
-
--- Dump completed on 2021-03-26 20:26:41
+-- Dump completed on 2021-03-27  0:02:20
