@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main extends JFrame implements ActionListener, MouseListener, KeyListener {
     // Image Object
@@ -139,13 +140,20 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
 
     public void login(){
         try{
+            ArrayList<User> arrayList = new ArrayList();
             String sql = "SELECT * FROM users WHERE username=? and password=?";
             PreparedStatement statement = getConnection().prepareStatement(sql);
             statement.setString(1, textFieldUsername.getText());
             statement.setString(2, textFieldPassword.getText());
             ResultSet result = statement.executeQuery();
-            if(result.next()){
-                MainInterface main = new MainInterface();
+            if(result.next()) {
+                String sql2 = "SELECT firstName FROM users WHERE username = " + "'" + textFieldUsername.getText() + "'";
+                PreparedStatement statement2 = getConnection().prepareStatement(sql2);
+                ResultSet result2 = statement2.executeQuery();
+                User user;
+                user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
+                MainInterface main = new MainInterface(user.getFirstName());
+
                 jframe.dispose();
             }
             else{

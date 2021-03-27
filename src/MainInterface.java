@@ -21,7 +21,14 @@ public class MainInterface {
     // JTable Objects
     private final JTable userTable = new JTable();
 
-    public MainInterface() throws SQLException {
+    // JLabel Objects
+    private final JLabel usernameLabel = new JLabel();
+
+    // User
+    String userLogged = "";
+
+    public MainInterface(String userLogged) throws SQLException {
+        this.userLogged = userLogged;
         // Frame Information
         jframe.setTitle("Database");
         jframe.setLayout(null);
@@ -36,6 +43,7 @@ public class MainInterface {
         headerPanel.setBounds(0,350,400,100);
         headerPanel.add(insertButton);
         headerPanel.add(deleteButton);
+        headerPanel.add(usernameLabel);
         tablePanel.setBounds(0,0, 400, 350);
         tablePanel.add(new JScrollPane(userTable), BorderLayout.CENTER);
 
@@ -44,6 +52,9 @@ public class MainInterface {
         insertButton.setText("Insert");
         deleteButton.setBounds(130,15,100,25);
         deleteButton.setText("Delete");
+
+        // Label Information
+        usernameLabel.setText("Welcome: " +userLogged);
 
         // SQL Inforamtion
         ArrayList<User> arrayList = new ArrayList();
@@ -68,14 +79,11 @@ public class MainInterface {
             row[3] = arrayList.get(i).getPassword();
             model.addRow(row);
         }
-
         userTable.setBounds(25,100,250, 300);
         userTable.setModel(model);
-
     }
 
     public static void main(String[] args) throws IOException, SQLException {
-        MainInterface main = new MainInterface();
     }
 
     public Connection getConnection() throws SQLException {
