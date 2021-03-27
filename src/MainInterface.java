@@ -69,7 +69,6 @@ public class MainInterface {
 
         // Table Information
         String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
-
         DefaultTableModel model = new DefaultTableModel(null, columnNames);
         Object[] row = new Object[4];
         for(int i = 0; i < arrayList.size(); i++){
@@ -91,29 +90,5 @@ public class MainInterface {
     }
 }
 
-class User {
-    private String firstName;
-    private String secondName;
-    private String username;
-    private String password;
 
-    public User(String firstName, String secondName, String username, String password){
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.username = username;
-        this.password = password;
-    }
 
-    public String getFirstName(){
-        return firstName;
-    }
-    public String getSecondName(){
-        return secondName;
-    }
-    public String getUsername(){
-        return username;
-    }
-    public String getPassword(){
-        return password;
-    }
-}

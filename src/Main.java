@@ -153,7 +153,6 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
                 User user;
                 user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
                 MainInterface main = new MainInterface(user.getFirstName());
-
                 jframe.dispose();
             }
             else{
