@@ -100,8 +100,13 @@ public class MainInterface implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == insertButton){
-            new InsertInterface();
+            new InsertInterface(this);
         }
+    }
+
+    public void updateInterface(){
+        tablePanel.revalidate();
+        tablePanel.repaint();
     }
 }
 

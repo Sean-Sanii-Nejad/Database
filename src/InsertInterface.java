@@ -2,8 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class InsertInterface implements ActionListener {
+
+    private MainInterface context;
 
     // JFrame and JPanel Objects
     private final JFrame jframe = new JFrame();
@@ -24,7 +28,8 @@ public class InsertInterface implements ActionListener {
     // JButton Objects
     private final JButton insertButton = new JButton();
 
-    InsertInterface(){
+    InsertInterface(MainInterface context){
+        this.context = context;
         // Frame Information
         jframe.setTitle("Insert Data");
         jframe.setLayout(null);
@@ -66,14 +71,33 @@ public class InsertInterface implements ActionListener {
         // Button Information
         insertButton.setBounds(120,130,75,25);
         insertButton.setText("Enter");
-    }
 
-    public static void main(String[] args){
-        InsertInterface main = new InsertInterface();
+        // ActionListeners
+        insertButton.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == insertButton){
+            try {
+                ArrayList<User> arrayList = new ArrayList();
+                String sql = "INSERT INTO users VALUES (?,?,?,?);";
+                PreparedStatement statement = getConnection().prepareStatement(sql);
+                statement.setString(1, firstName.getText());
+                statement.setString(2, secondName.getText());
+                statement.setString(3, username.getText());
+                statement.setString(4, password.getText());
+                statement.executeUpdate();
+                context.updateInterface();
 
+            } catch(SQLException error){
+                error.printStackTrace();
+            }
+
+        }
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
     }
 }
