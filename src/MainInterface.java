@@ -26,8 +26,6 @@ public class MainInterface implements ActionListener {
     // JLabel Objects
     private final JLabel usernameLabel = new JLabel();
 
-    // Model Object
-
     // User
     String userLogged = "";
 
@@ -62,7 +60,6 @@ public class MainInterface implements ActionListener {
 
         // ActionListeners
         insertButton.addActionListener(this);
-
         setTable();
     }
 
@@ -91,7 +88,12 @@ public class MainInterface implements ActionListener {
 
         // Table Information
         String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
 
         for(int i=0; i < columnNames.length; i++){
             model.addColumn(columnNames[i]);
@@ -106,6 +108,7 @@ public class MainInterface implements ActionListener {
             model.addRow(row);
         }
         userTable.setBounds(25,100,250, 300);
+        userTable.getTableHeader().setReorderingAllowed(false);
         userTable.setModel(model);
     }
 }

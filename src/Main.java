@@ -134,8 +134,6 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
     public void keyReleased(KeyEvent e) {
     }
 
-
-
     public void login(){
         try{
             ArrayList<User> arrayList = new ArrayList();

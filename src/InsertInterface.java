@@ -31,7 +31,7 @@ public class InsertInterface implements ActionListener {
     InsertInterface(MainInterface context){
         this.context = context;
         // Frame Information
-        jframe.setTitle("Insert Data");
+        jframe.setTitle("Create Account");
         jframe.setLayout(null);
         jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         jframe.setSize(315, 200);
