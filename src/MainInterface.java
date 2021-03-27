@@ -26,6 +26,8 @@ public class MainInterface implements ActionListener {
     // JLabel Objects
     private final JLabel usernameLabel = new JLabel();
 
+    // Model Object
+
     // User
     String userLogged = "";
 
@@ -61,36 +63,7 @@ public class MainInterface implements ActionListener {
         // ActionListeners
         insertButton.addActionListener(this);
 
-        // SQL Inforamtion
-        ArrayList<User> arrayList = new ArrayList();
-        String sql = "SELECT * FROM users";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-        ResultSet result = statement.executeQuery();
-        User user;
-        while(result.next()){
-            user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
-            arrayList.add(user);
-        }
-
-        // Table Information
-        String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
-        DefaultTableModel model = new DefaultTableModel(null, columnNames) {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-
-        Object[] row = new Object[4];
-        for(int i = 0; i < arrayList.size(); i++){
-            row[0] = arrayList.get(i).getFirstName();
-            row[1] = arrayList.get(i).getSecondName();
-            row[2] = arrayList.get(i).getUsername();
-            row[3] = arrayList.get(i).getPassword();
-            model.addRow(row);
-        }
-        userTable.setBounds(25,100,250, 300);
-        userTable.setModel(model);
+        setTable();
     }
 
     public Connection getConnection() throws SQLException {
@@ -105,8 +78,39 @@ public class MainInterface implements ActionListener {
     }
 
     public void updateInterface(){
-        tablePanel.revalidate();
-        tablePanel.repaint();
+
+    }
+
+    public void setTable() throws SQLException {
+        // SQL Inforamtion
+        ArrayList<User> arrayList = new ArrayList();
+        String sql = "SELECT * FROM users";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        ResultSet result = statement.executeQuery();
+        User user;
+        while(result.next()){
+            user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
+            arrayList.add(user);
+        }
+
+        // Table Information
+        String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
+        DefaultTableModel model = new DefaultTableModel();
+
+        for(int i=0; i < columnNames.length; i++){
+            model.addColumn(columnNames[i]);
+        }
+
+        Object[] row = new Object[4];
+        for(int i = 0; i < arrayList.size(); i++){
+            row[0] = arrayList.get(i).getFirstName();
+            row[1] = arrayList.get(i).getSecondName();
+            row[2] = arrayList.get(i).getUsername();
+            row[3] = arrayList.get(i).getPassword();
+            model.addRow(row);
+        }
+        userTable.setBounds(25,100,250, 300);
+        userTable.setModel(model);
     }
 }
 

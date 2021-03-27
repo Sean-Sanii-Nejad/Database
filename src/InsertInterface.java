@@ -88,12 +88,10 @@ public class InsertInterface implements ActionListener {
                 statement.setString(3, username.getText());
                 statement.setString(4, password.getText());
                 statement.executeUpdate();
-                context.updateInterface();
-
+                context.setTable();
             } catch(SQLException error){
                 error.printStackTrace();
             }
-
         }
     }
 
