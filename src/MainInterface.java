@@ -33,7 +33,7 @@ public class MainInterface {
         jframe.setTitle("Database");
         jframe.setLayout(null);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setSize(400, 450);
+        jframe.setSize(400, 425);
         jframe.setResizable(false);
         jframe.add(headerPanel);
         jframe.add(tablePanel);
@@ -69,7 +69,13 @@ public class MainInterface {
 
         // Table Information
         String[] columnNames = {"Firstname", "Surname", "Username", "Password"};
-        DefaultTableModel model = new DefaultTableModel(null, columnNames);
+        DefaultTableModel model = new DefaultTableModel(null, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+
         Object[] row = new Object[4];
         for(int i = 0; i < arrayList.size(); i++){
             row[0] = arrayList.get(i).getFirstName();
@@ -82,12 +88,10 @@ public class MainInterface {
         userTable.setModel(model);
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
-    }
-
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
     }
+
 }
 
 
