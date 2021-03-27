@@ -38,14 +38,7 @@ public class DeleteInterface implements ActionListener {
         username.setBounds(75,5,150,25);
         deleteButton.setText("Delete");
         deleteButton.addActionListener(this);
-
-        ArrayList<User> arrayList = new ArrayList();
-        String sql = "SELECT username FROM users";
-        PreparedStatement statement = Model.getConnection().prepareStatement(sql);
-        ResultSet result = statement.executeQuery();
-        while(result.next()){
-            username.addItem(result.getString(1));
-        }
+        setComboBox();
     }
 
     @Override
@@ -61,6 +54,16 @@ public class DeleteInterface implements ActionListener {
             } catch(SQLException error){
                 error.printStackTrace();
             }
+        }
+    }
+
+    public void setComboBox() throws SQLException {
+        ArrayList<User> arrayList = new ArrayList();
+        String sql = "SELECT username FROM users";
+        PreparedStatement statement = Model.getConnection().prepareStatement(sql);
+        ResultSet result = statement.executeQuery();
+        while(result.next()){
+            username.addItem(result.getString(1));
         }
     }
 }
