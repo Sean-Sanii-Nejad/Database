@@ -60,6 +60,7 @@ public class MainInterface implements ActionListener {
 
         // ActionListeners
         insertButton.addActionListener(this);
+        deleteButton.addActionListener(this);
         setTable();
     }
 
@@ -67,6 +68,14 @@ public class MainInterface implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == insertButton){
             new InsertInterface(this);
+        }
+
+        if(e.getSource() == deleteButton){
+            try {
+                new DeleteInterface(this);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
