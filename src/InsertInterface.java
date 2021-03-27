@@ -33,7 +33,7 @@ public class InsertInterface implements ActionListener {
         // Frame Information
         jframe.setTitle("Insert Data");
         jframe.setLayout(null);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         jframe.setSize(315, 200);
         jframe.setResizable(false);
         jframe.add(panel);
@@ -82,7 +82,7 @@ public class InsertInterface implements ActionListener {
             try {
                 ArrayList<User> arrayList = new ArrayList();
                 String sql = "INSERT INTO users VALUES (?,?,?,?);";
-                PreparedStatement statement = getConnection().prepareStatement(sql);
+                PreparedStatement statement = Model.getConnection().prepareStatement(sql);
                 statement.setString(1, firstName.getText());
                 statement.setString(2, secondName.getText());
                 statement.setString(3, username.getText());
@@ -93,9 +93,5 @@ public class InsertInterface implements ActionListener {
                 error.printStackTrace();
             }
         }
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
     }
 }

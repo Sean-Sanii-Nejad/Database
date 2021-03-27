@@ -66,10 +66,6 @@ public class MainInterface implements ActionListener {
         setTable();
     }
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == insertButton){
@@ -85,7 +81,7 @@ public class MainInterface implements ActionListener {
         // SQL Inforamtion
         ArrayList<User> arrayList = new ArrayList();
         String sql = "SELECT * FROM users";
-        PreparedStatement statement = getConnection().prepareStatement(sql);
+        PreparedStatement statement = Model.getConnection().prepareStatement(sql);
         ResultSet result = statement.executeQuery();
         User user;
         while(result.next()){

@@ -134,21 +134,19 @@ public class Main extends JFrame implements ActionListener, MouseListener, KeyLi
     public void keyReleased(KeyEvent e) {
     }
 
-    public Connection getConnection() throws SQLException{
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
-    }
+
 
     public void login(){
         try{
             ArrayList<User> arrayList = new ArrayList();
             String sql = "SELECT * FROM users WHERE username=? and password=?";
-            PreparedStatement statement = getConnection().prepareStatement(sql);
+            PreparedStatement statement = Model.getConnection().prepareStatement(sql);
             statement.setString(1, textFieldUsername.getText());
             statement.setString(2, textFieldPassword.getText());
             ResultSet result = statement.executeQuery();
             if(result.next()) {
                 String sql2 = "SELECT firstName FROM users WHERE username = " + "'" + textFieldUsername.getText() + "'";
-                PreparedStatement statement2 = getConnection().prepareStatement(sql2);
+                PreparedStatement statement2 = Model.getConnection().prepareStatement(sql2);
                 ResultSet result2 = statement2.executeQuery();
                 User user;
                 user = new User(result.getString("FirstName"), result.getString("SecondName"), result.getString("Username"), result.getString("Password"));
