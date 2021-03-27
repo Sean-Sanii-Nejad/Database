@@ -19,8 +19,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES ('Sean','Sanii Nejad','username','password'),('Shiren','Quinn','Ines','cereal'),('John','Wood','JohnStar','pancake'),('Alex','Sun','Hello','World'),('Sam','Tuck','SamuelPow','cheesecake');
-UNLOCK TABLES;
+INSERT INTO `users` VALUES (
+'Sean','Sanii Nejad','username','password'),
+('Shiren','Quinn','Ines','cereal'),
+('John','Wood','JohnStar','pancake'),
+('Alex','Sun','Hello','World'),
+('Sam','Tuck','SamuelPow','cheesecake');
 
 -- Dump completed on 2021-03-27  0:02:20

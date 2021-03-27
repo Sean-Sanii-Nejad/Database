@@ -2,12 +2,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Area;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MainInterface {
+public class MainInterface implements ActionListener {
 
     // JFrame and JPanel Objects
     private final JFrame jframe = new JFrame();
@@ -56,6 +58,9 @@ public class MainInterface {
         // Label Information
         usernameLabel.setText("Welcome: " +userLogged);
 
+        // ActionListeners
+        insertButton.addActionListener(this);
+
         // SQL Inforamtion
         ArrayList<User> arrayList = new ArrayList();
         String sql = "SELECT * FROM users";
@@ -92,6 +97,12 @@ public class MainInterface {
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase?", "root", "test");
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == insertButton){
+            new InsertInterface();
+        }
+    }
 }
 
 

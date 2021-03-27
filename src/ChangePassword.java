@@ -1,21 +1,22 @@
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class ChangePassword implements ActionListener {
 
+    // JFrame and JPanel Objects
     private final JFrame jframe = new JFrame();
-
     private final JPanel panelChangePassword = new JPanel();
 
+    // JLabel Objects
     private final JLabel labelNewPassword = new JLabel();
     private final JLabel labelNewPasswordAgain = new JLabel();
 
+    // JTextField Objects
     private final JTextField textFieldNewPassword = new JTextField();
     private final JTextField textFieldNewPasswordAgain = new JTextField();
 
+    // JButton Objects
     private final JButton buttonChangePassword = new JButton();
 
     public ChangePassword(){
@@ -50,7 +51,6 @@ public class ChangePassword implements ActionListener {
         // Button Information
         buttonChangePassword.setText("Recover Password");
         buttonChangePassword.setBounds(95, 130, 200, 30);
-
     }
 
     public static void main(String[] args){
